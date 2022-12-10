@@ -5,42 +5,46 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  string contents, compartment1, compartment2;
-  int contents_length;
+  // contents of 3 rucksacsk
+  string contents1, contents2, contents3;
+  // priority
   int priority = 0, total_priority = 0;
 
   // read input
   while (!cin.eof()) {
-    cin >> contents;
+    cin >> contents1;
+    cin >> contents2;
+    cin >> contents3;
 
-    map<char, bool> letters;
+    map<char, int> letters;
 
-    contents_length = contents.size();
-
-    compartment1 = contents.substr(0, contents_length / 2);
-    compartment2 = contents.substr(contents_length / 2, contents_length / 2);
-
-    // cout << contents << " : " << compartment1 << " - " << compartment2 << " ";
-
-    for (string::iterator it = compartment1.begin(); it != compartment1.end(); it++) {
-      letters[*it] = true;
+    for (string::iterator it = contents1.begin(); it != contents1.end(); it++) {
+      letters[*it] = 1;
     }
 
-    for (string::iterator it = compartment2.begin(); it != compartment2.end(); it++) {
-      if (letters[*it] == true) {
+    for (string::iterator it = contents2.begin(); it != contents2.end(); it++) {
+      if (letters[*it] == 1) {
+        letters[*it] = 2;
+      }
+    }
+
+    for (string::iterator it = contents3.begin(); it != contents3.end(); it++) {
+      if (letters[*it] == 2) {
+        // found same letter in all 3 rucksacks
+
+        letters[*it] = 3;
+
+        // calculating priority of letter
         priority = (int)*it;
         if (isupper(*it)) {
           priority -= 38;
         } else {
           priority -= 96;
         }
-        // cout << priority << " ";
         total_priority += priority;
         break;
       }
     }
-
-    // cout << "\n";
 
     cin.get();   // reads in the new line character \n after the input (on the same line)
     cin.peek();  // reads first character of the next line
